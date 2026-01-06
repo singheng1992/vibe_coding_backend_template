@@ -1,0 +1,75 @@
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "高性能 FastAPI 后端项目模板"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard]==0.128.0",
+    "uvicorn==0.40.0",
+    "sqlalchemy==2.0.45",
+    "asyncpg==0.31.0",
+    "alembic==1.13.0",
+    "redis==7.1.0",
+    "aio-pika==9.4.0",
+    "minio==7.2.20",
+    "pyjwt==2.10.1",
+    "passlib[bcrypt]==1.7.4",
+    "bcrypt==4.0.1",
+    "pydantic==2.12.5",
+    "pydantic-settings==2.12.0",
+    "email-validator==2.3.0",
+    "loguru==0.7.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "pytest-asyncio==0.25.2",
+    "pytest-cov==6.0.0",
+    "httpx==0.28.1",
+    "ruff==0.14.10",
+    "mypy==1.19.1",
+    "pre-commit==4.0.1",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+exclude = ["venv", ".venv", "alembic", "tests"]
+
+[tool.ruff]
+target-version = "py311"
+exclude = ["venv", ".venv", "alembic", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+    "T201",   # print statements are not allowed
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "W191",  # indentation contains tabs
+    "B904",  # Allow raising exceptions without from e, for HTTPException
+]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+]
